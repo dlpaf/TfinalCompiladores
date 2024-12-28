@@ -1,0 +1,14 @@
+Token: ID, Value: 'x', Position: 0
+Token: ASSIGN, Value: '=', Position: 2
+Token: NUMBER, Value: 10, Position: 4
+Token: ID, Value: 'y', Position: 7
+Token: ASSIGN, Value: '=', Position: 9
+Token: ID, Value: 'falso', Position: 11
+Token: ID, Value: 'imprime', Position: 17
+Token: ID, Value: 'x', Position: 25
+Token: OP_ARIT, Value: '*', Position: 27
+Token: LPAREN, Value: '(', Position: 29
+Token: ID, Value: 'y', Position: 30
+Token: OP_ARIT, Value: '+', Position: 32
+Token: NUMBER, Value: 2, Position: 34
+Token: RPAREN, Value: ')', Position: 35

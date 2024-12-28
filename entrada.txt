@@ -1,0 +1,3 @@
+x = 10
+y = falso
+imprime x * (y + 2)
