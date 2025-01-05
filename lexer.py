@@ -67,7 +67,7 @@ class Scanner:
 def write_tokens_to_file(tokens, output_file):
     with open(output_file, 'w', encoding='utf-8') as f:
         for token_type, token_value, position in tokens:
-            f.write(f"Token: {token_type}, Value: {repr(token_value)}, Position: {position}\n")
+            f.write(f"Token: {token_type}, Value: {repr(token_value)}\n")
 
 def main():
     try:
