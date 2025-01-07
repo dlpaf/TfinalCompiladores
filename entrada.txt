@@ -1,3 +1,23 @@
-x = 10
-y = falso
-imprime x * (y + 2)
+Program Calculator {
+    const PI = 3.14;
+    int x, y;
+    float result;
+    
+    input(x, y);
+    
+    if (x > y) {
+        result = x * PI;
+        print("Result is: ", result);
+    } else {
+        result = y * PI;
+        print("Result is: ", result);
+    }
+    
+    while (x > 0) {
+        x = x - 1;
+        print("Countdown: ", x);
+        if (x == 5) {
+            break;
+        }
+    }
+}

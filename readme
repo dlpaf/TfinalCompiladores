@@ -1,0 +1,114 @@
+# Compilador LPMS - Análise Léxica e Sintática
+
+Este é um compilador para a linguagem LPMS que realiza análise léxica e sintática, gerando tokens e uma Árvore Sintática Abstrata (AST) do programa de entrada.
+
+## Pré-requisitos
+
+- Python 3.7 ou superior
+- Bibliotecas Python listadas em requirements.txt
+
+## Instalação e Configuração
+
+1. Primeiro, instale o virtualenv se ainda não tiver:
+pip install virtualenv
+
+2. Crie um novo ambiente virtual:
+# No Windows:
+python -m venv venv
+# No Linux/macOS:
+python3 -m venv venv
+
+3. Ative o ambiente virtual:
+# No Windows:
+venv\Scripts\activate
+
+# No Linux/macOS:
+source venv/bin/activate
+
+4. Instale as dependências necessárias:
+pip install -r requirements.txt
+
+5. Coloque todos os arquivos no mesmo diretório:
+   - lexer.py
+   - parser.py
+   - requirements.txt
+   - entrada.txt (seu programa LPMS)
+
+## Executando o Compilador
+
+Existem duas formas de executar o compilador:
+
+### 1. Análise Completa (Léxica + Sintática)
+Execute o parser, que automaticamente realizará a análise léxica primeiro:
+python parser.py
+
+Isso irá gerar:
+- `parser_out.txt`: Contendo a AST ou erros sintáticos/semânticos
+
+### 2. Apenas Análise Léxica
+Se desejar ver apenas os tokens gerados:
+python lexer.py
+
+Isso irá gerar:
+- `saida.txt`: Contendo a lista de tokens identificados
+
+## Arquivos de Saída
+
+1. `saida.txt` (análise léxica):
+Token: TYPE, Value: 'int'
+Token: ID, Value: 'x'
+Token: ASSIGN, Value: '='
+Token: NUMBER, Value: 10
+...
+
+2. `parser_out.txt` (análise sintática):
+AST Representation:
+(Program 
+  (Declarations 
+    (VarDecl (Type int) (ID x))
+  )
+  (Statements 
+    (Assignment (ID x) (Constant 10))
+  )
+)
+
+## Tratamento de Erros
+
+- Erros léxicos: Serão reportados em `saida.txt`
+- Erros sintáticos/semânticos: Serão reportados em `parser_out.txt`
+- Erros de arquivo ou execução: Serão mostrados no console e nos arquivos de saída
+
+## Exemplo de Programa LPMS
+
+Crie um arquivo `entrada.txt` com o seguinte conteúdo:
+Program Calculator {
+    const PI = 3.14;
+    int x, y;
+    float result;
+    
+    input(x, y);
+    if (x > y) {
+        result = x * PI;
+        print("Result is: ", result);
+    }
+}
+
+## Desativando o Ambiente Virtual
+
+Quando terminar de usar o compilador:
+deactivate
+
+## Estrutura do Projeto
+
+.
+├── lexer.py        # Analisador léxico
+├── parser.py       # Analisador sintático
+├── entrada.txt     # Programa LPMS de entrada
+├── requirements.txt # Dependências do projeto
+├── saida.txt       # Saída da análise léxica
+└── parser_out.txt  # Saída da análise sintática
+
+## Referências
+
+- Documentação do PLY: https://www.dabeaz.com/ply/
+- Especificação da Linguagem LPMS (conforme materiais do curso)

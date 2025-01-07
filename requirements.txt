@@ -1,0 +1,2 @@
+# Python dependencies for LPMS Compiler
+ply==3.11

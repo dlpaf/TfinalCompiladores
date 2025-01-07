@@ -63,6 +63,32 @@ class Scanner:
             self.tokens.append((token_type, token_value, position))
         
         return self.tokens
+    
+    def input(self, text):
+        self.source_code = text
+        self.tokens = self.tokenize()
+        return self.tokens
+
+    def token(self):
+        if not hasattr(self, 'token_index'):
+            self.token_index = 0
+        
+        if not hasattr(self, 'current_tokens'):
+            self.current_tokens = self.tokenize()
+        
+        if self.token_index >= len(self.current_tokens):
+            return None
+            
+        token_info = self.current_tokens[self.token_index]
+        token = type('Token', (), {
+            'type': token_info[0],
+            'value': token_info[1],
+            'lexpos': token_info[2],
+            'lineno': self.source_code.count('\n', 0, token_info[2]) + 1
+        })
+        
+        self.token_index += 1
+        return token
 
 def write_tokens_to_file(tokens, output_file):
     with open(output_file, 'w', encoding='utf-8') as f:
