@@ -188,8 +188,16 @@ def write_output(ast, errors, filename='parser_out.txt'):
             f.write("\n")
 
 def main():
+    if len(sys.argv) < 2:
+        print("Erro: Você precisa especificar o nome do arquivo de entrada.")
+        print("Uso: python parser.py <nome_do_arquivo>")
+        sys.exit(1)
+
+    input_file_name = sys.argv[1]
+
     try:
-        with open('entrada.txt', 'r', encoding='utf-8') as file:
+        # Read from input file
+        with open(input_file_name, 'r', encoding='utf-8') as file:
             source_code = file.read()
 
         parser = Parser()
@@ -205,9 +213,9 @@ def main():
             print("Análise sintática concluída com sucesso. AST gravada em parser_out.txt")
 
     except FileNotFoundError:
-        print("Erro: Arquivo 'entrada.txt' não encontrado.")
+        print(f"Erro: Arquivo '{input_file_name}' não encontrado.")
         with open('parser_out.txt', 'w', encoding='utf-8') as f:
-            f.write("Erro: Arquivo 'entrada.txt' não encontrado.\n")
+            f.write(f"Erro: Arquivo '{input_file_name}' não encontrado.\n")
     except Exception as e:
         print(f"Erro durante a execução: {str(e)}")
         with open('parser_out.txt', 'w', encoding='utf-8') as f:

@@ -1,4 +1,5 @@
 import re
+import sys
 
 class Scanner:
     def __init__(self, source_code):
@@ -45,11 +46,10 @@ class Scanner:
             token_value = match.group()
             position = match.start()
             
-            # Skip whitespace and comments
             if token_type in ['WHITESPACE', 'COMMENT']:
                 continue
                 
-            # Handle special cases
+            # special cases
             if token_type == 'NUMBER':
                 if '.' in token_value:
                     token_value = float(token_value)
@@ -90,30 +90,37 @@ class Scanner:
         self.token_index += 1
         return token
 
-def write_tokens_to_file(tokens, output_file):
-    with open(output_file, 'w', encoding='utf-8') as f:
-        for token_type, token_value, position in tokens:
-            f.write(f"Token: {token_type}, Value: {repr(token_value)}\n")
+def write_tokens_to_terminal(tokens):
+    for token_type, token_value, position in tokens:
+        print(f"Token: {token_type}, Value: {repr(token_value)}")
 
 def main():
+    if len(sys.argv) < 2:
+        print("Erro: Você precisa especificar o nome do arquivo de entrada.")
+        print("Uso: python lexer.py <nome_do_arquivo>")
+        sys.exit(1)
+
+    input_file_name = sys.argv[1]
+
     try:
         # Read from input file
-        with open('entrada.txt', 'r', encoding='utf-8') as input_file:
+        with open(input_file_name, "r", encoding="utf-8") as input_file:
             source_code = input_file.read()
-        
+
         # Create scanner and get tokens
         scanner = Scanner(source_code)
         tokens = scanner.tokenize()
-        
-        # Write tokens to output file
-        write_tokens_to_file(tokens, 'saida.txt')
-        
-        print("Análise léxica concluída. Os resultados foram salvos em 'saida.txt'")
-        
+
+        # Output tokens to terminal
+        write_tokens_to_terminal(tokens)
+
+        print("\nAnálise léxica concluída.")
+
     except FileNotFoundError:
-        print("Erro: O arquivo 'entrada.txt' não foi encontrado.")
+        print(f"Erro: O arquivo '{input_file_name}' não foi encontrado.")
     except Exception as e:
         print(f"Erro durante a execução: {str(e)}")
+
 
 if __name__ == "__main__":
     main()
