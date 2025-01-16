@@ -1,6 +1,9 @@
-from ply import yacc
-from lexer import Scanner
 import sys
+
+from ply import yacc
+
+from lexer import Scanner
+
 
 # Node class for AST
 class Node:
@@ -37,7 +40,7 @@ class Parser:
         self.scanner = None
         self.parser = None
         self.errors = []
-        self.debug = False  # Toggle for debug messages
+        self.debug = True  # Toggle for debug messages
         
     # Define the tokens list explicitly from the token_specs in Scanner
     tokens = [name for name, pattern in Scanner("").token_specs]
