@@ -40,75 +40,16 @@ Existem duas formas de executar o compilador:
 
 ### 1. Análise Completa (Léxica + Sintática)
 Execute o parser, que automaticamente realizará a análise léxica primeiro:
-python parser.py
+python parser.py entrada txt
 
 Isso irá gerar:
 - `parser_out.txt`: Contendo a AST ou erros sintáticos/semânticos
 
+OBS: O TOKEN PROGRAM DEVE SER Program, com P maiúsculo
+
 ### 2. Apenas Análise Léxica
 Se desejar ver apenas os tokens gerados:
-python lexer.py
+python lexer.py entrada.txt
 
 Isso irá gerar:
 - `saida.txt`: Contendo a lista de tokens identificados
-
-## Arquivos de Saída
-
-1. `saida.txt` (análise léxica):
-Token: TYPE, Value: 'int'
-Token: ID, Value: 'x'
-Token: ASSIGN, Value: '='
-Token: NUMBER, Value: 10
-...
-
-2. `parser_out.txt` (análise sintática):
-AST Representation:
-(Program 
-  (Declarations 
-    (VarDecl (Type int) (ID x))
-  )
-  (Statements 
-    (Assignment (ID x) (Constant 10))
-  )
-)
-
-## Tratamento de Erros
-
-- Erros léxicos: Serão reportados em `saida.txt`
-- Erros sintáticos/semânticos: Serão reportados em `parser_out.txt`
-- Erros de arquivo ou execução: Serão mostrados no console e nos arquivos de saída
-
-## Exemplo de Programa LPMS
-
-Crie um arquivo `entrada.txt` com o seguinte conteúdo:
-Program Calculator {
-    const PI = 3.14;
-    int x, y;
-    float result;
-    
-    input(x, y);
-    if (x > y) {
-        result = x * PI;
-        print("Result is: ", result);
-    }
-}
-
-## Desativando o Ambiente Virtual
-
-Quando terminar de usar o compilador:
-deactivate
-
-## Estrutura do Projeto
-
-.
-├── lexer.py        # Analisador léxico
-├── parser.py       # Analisador sintático
-├── entrada.txt     # Programa LPMS de entrada
-├── requirements.txt # Dependências do projeto
-├── saida.txt       # Saída da análise léxica
-└── parser_out.txt  # Saída da análise sintática
-
-## Referências
-
-- Documentação do PLY: https://www.dabeaz.com/ply/
-- Especificação da Linguagem LPMS (conforme materiais do curso)

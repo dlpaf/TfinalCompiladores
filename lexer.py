@@ -68,12 +68,11 @@ class Scanner:
         self.source_code = text
         self.tokens = self.tokenize()
         return self.tokens
-
+ 
     def token(self):
+        """Return the next token."""
         if not hasattr(self, 'token_index'):
             self.token_index = 0
-        
-        if not hasattr(self, 'current_tokens'):
             self.current_tokens = self.tokenize()
         
         if self.token_index >= len(self.current_tokens):
@@ -86,7 +85,7 @@ class Scanner:
             'lexpos': token_info[2],
             'lineno': self.source_code.count('\n', 0, token_info[2]) + 1
         })
-        
+    
         self.token_index += 1
         return token
 
