@@ -42,7 +42,6 @@ class Parser:
         self.errors = []
         self.debug = True  # Toggle for debug messages
         
-    # Define the tokens list explicitly from the token_specs in Scanner
     tokens = [name for name, pattern in Scanner("").token_specs]
     
     precedence = (
@@ -52,22 +51,32 @@ class Parser:
     )
 
     def p_program(self, p):
-        '''program : PROGRAM ID LBRACE declarations statements RBRACE'''
-        p[0] = Node('Program', [p[4], p[5]], p[2])
+        '''program : PROGRAM ID LBRACE statements RBRACE'''
+        p[0] = Node('Program', [p[4]], p[2])
         if self.debug:
             print(f"DEBUG: Processed program rule with ID: {p[2]}")
 
-    def p_declarations(self, p):
-        '''declarations : declaration declarations
-                      | empty'''
+    def p_statements(self, p):
+        '''statements : statement statements
+                     | empty'''
         if len(p) == 3:
-            if p[2].type == 'Declarations':
+            if p[2].type == 'Statements':
                 p[2].children.insert(0, p[1])
                 p[0] = p[2]
             else:
-                p[0] = Node('Declarations', [p[1]])
+                p[0] = Node('Statements', [p[1]])
         else:
-            p[0] = Node('Declarations', [])
+            p[0] = Node('Statements', [])
+
+    def p_statement(self, p):
+        '''statement : assignment
+                    | declaration
+                    | if_statement
+                    | while_statement
+                    | print_statement
+                    | input_statement
+                    | break_statement'''
+        p[0] = p[1]
 
     def p_declaration(self, p):
         '''declaration : const_decl
@@ -99,27 +108,6 @@ class Parser:
                    | STRING
                    | BOOL_VAL'''
         p[0] = Node('Constant', [], p[1])
-
-    def p_statements(self, p):
-        '''statements : statement statements
-                     | empty'''
-        if len(p) == 3:
-            if p[2].type == 'Statements':
-                p[2].children.insert(0, p[1])
-                p[0] = p[2]
-            else:
-                p[0] = Node('Statements', [p[1]])
-        else:
-            p[0] = Node('Statements', [])
-
-    def p_statement(self, p):
-        '''statement : assignment
-                    | if_statement
-                    | while_statement
-                    | print_statement
-                    | input_statement
-                    | break_statement'''
-        p[0] = p[1]
 
     def p_break_statement(self, p):
         '''break_statement : BREAK SEMICOLON'''
@@ -275,7 +263,7 @@ def main():
     except Exception as e:
         print(f"Erro durante a execução: {str(e)}")
         with open('parser_out.txt', 'w', encoding='utf-8') as f:
-            f.write(f"Erro durante a execução: {str(e)}\n")
+            f.write(f"Erro durante a    execução: {str(e)}\n")
 
 if __name__ == "__main__":
     main()

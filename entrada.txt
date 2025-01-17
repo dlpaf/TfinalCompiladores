@@ -13,6 +13,8 @@ Program Calculator {
         print("Result is: ", result);
     }
     
+    int z; 
+    
     while (x > 0) {
         x = x - 1;
         print("Countdown: ", x);
