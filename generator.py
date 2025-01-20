@@ -6,6 +6,7 @@ class TACGenerator:
         self.tac = []
         self.temp_count = 0
         self.label_count = 0
+        self.loop_end_label = None
 
     def new_temp(self):
         temp = f"t{self.temp_count}"
@@ -74,12 +75,17 @@ class TACGenerator:
         condition, body = node.children
         label_start = self.new_label()
         label_end = self.new_label()
+        prev_loop_end = self.loop_end_label
+        self.loop_end_label = label_end
+
         self.tac.append(f"label {label_start}")
         cond = self.generate(condition)
         self.tac.append(f"if not {cond} goto {label_end}")
         self.generate(body)
         self.tac.append(f"goto {label_start}")
         self.tac.append(f"label {label_end}")
+
+        self.loop_end_label = prev_loop_end
 
     def gen_if(self, node):
         condition, if_body = node.children
@@ -96,7 +102,10 @@ class TACGenerator:
         return node.value
 
     def gen_break(self, node):
-        self.tac.append("goto L_BREAK")
+        if self.loop_end_label:
+            self.tac.append(f"goto {self.loop_end_label}")
+        else:
+            raise ValueError("'break' statement not inside a loop")
 
 # Carregar a AST gerada pelo parser
 with open("entrada.txt", "r") as file:
@@ -119,4 +128,18 @@ else:
     # Gerar código de máquina simples
     print("\nCódigo de Máquina Simples:")
     for line in generator.tac:
-        print(line.replace("goto", "JMP").replace("label", "LBL"))
+        if "goto" in line:
+            print(line.replace("goto", "JUMP"))
+        elif "label" in line:
+            print(line.replace("label", "LABEL"))
+        elif "print" in line:
+            parts = line.split(" ", 1)
+            print(f"OUTPUT {parts[1]}")
+        elif "input" in line:
+            parts = line.split(" ", 1)
+            print(f"INPUT {parts[1]}")
+        elif "=" in line:
+            parts = line.split(" = ")
+            print(f"STORE {parts[1]} TO {parts[0]}")
+        else:
+            print(line)
