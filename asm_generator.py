@@ -56,10 +56,10 @@ class ASMGenerator:
             elif "input" in line:
                 self.process_input(line)
             elif "goto" in line:
-                label = line.split()[1]
+                label = line.split()[-1]
                 self.asm_code.append(f"    jmp {label}")
             elif "label" in line:
-                label = line.split()[1]
+                label = line.split()[-1]
                 self.asm_code.append(f"{label}:")
             elif "if not" in line:
                 self.process_conditional(line)
@@ -125,26 +125,52 @@ class ASMGenerator:
             ])
 
     def process_conditional(self, line):
+        print("Processando condicional")
+        print(line)
         if "if not" in line:
-            if ">" in line:
-                parts = line.split(">")
-                val1 = parts[0].split()[-1].strip()
-                val2 = parts[1].split("goto")[0].strip()
-                label = line.split("goto ")[1].strip()
+             # Extrai a variável temporária e o label
+            parts = line.split()
+            temp_var = parts[2]  # pega t0, t3, t5, etc
+            label = parts[-1]    # pega L0, L3, L4, etc
+            
+            # Verifica o valor da variável temporária e faz o jump se for 0
+            self.asm_code.extend([
+                f"    mov eax, [{temp_var}]",
+                "    cmp eax, 0",
+                f"    je {label}"   # Pula se a condição for falsa (eax == 0)
+            ])
+            if ">" in condition:
+                # Para "if not x > y goto label"
+                left, right = condition.split(">")
+                left = left.strip()
+                right = right.strip()
                 self.asm_code.extend([
-                    f"    mov eax, [{val1}]",
-                    f"    cmp eax, {val2}",
-                    f"    jle {label}"  # Se não for maior, salta
+                    f"    mov eax, [{left}]",
+                    f"    mov ebx, {right}",
+                    "    cmp eax, ebx",
+                    f"    jle {label}"  # Salta se não for maior (less or equal)
                 ])
-            elif "==" in line:
-                parts = line.split("==")
-                val1 = parts[0].split()[-1].strip()
-                val2 = parts[1].split("goto")[0].strip()
-                label = line.split("goto ")[1].strip()
+            elif "==" in condition:
+                # Para "if not x == y goto label"
+                left, right = condition.split("==")
+                left = left.strip()
+                right = right.strip()
                 self.asm_code.extend([
-                    f"    mov eax, [{val1}]",
-                    f"    cmp eax, {val2}",
-                    f"    jne {label}"  # Se não for igual, salta
+                    f"    mov eax, [{left}]",
+                    f"    mov ebx, {right}",
+                    "    cmp eax, ebx",
+                    f"    jne {label}"  # Salta se não for igual (not equal)
+                ])
+            elif "<" in condition:
+                # Para "if not x < y goto label"
+                left, right = condition.split("<")
+                left = left.strip()
+                right = right.strip()
+                self.asm_code.extend([
+                    f"    mov eax, [{left}]",
+                    f"    mov ebx, {right}",
+                    "    cmp eax, ebx",
+                    f"    jge {label}"  # Salta se não for menor (greater or equal)
                 ])
 
     def process_print(self, line):
