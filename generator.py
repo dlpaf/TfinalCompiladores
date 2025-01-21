@@ -6,7 +6,8 @@ class TACGenerator:
         self.tac = []
         self.temp_count = 0
         self.label_count = 0
-        self.loop_end_label = None
+        self.loop_end_label = None  # Keeps track of the current loop's end label
+        self.symbol_table = {}  # Tracks variable types
 
     def new_temp(self):
         temp = f"t{self.temp_count}"
@@ -33,16 +34,21 @@ class TACGenerator:
 
     def gen_constdecl(self, node):
         id_node, value_node = node.children
+        self.symbol_table[id_node.value] = "const"
         self.tac.append(f"{id_node.value} = {value_node.value}")
 
     def gen_vardecl(self, node):
+        type_node = node.children[0]
+        var_type = type_node.value
         for id_node in node.children[1:]:
-            self.tac.append(f"{id_node.value} = 0")
+            self.symbol_table[id_node.value] = var_type
+            self.tac.append(f"{id_node.value} = 0  # type: {var_type}")
 
     def gen_assignment(self, node):
         id_node, expr_node = node.children
         expr = self.generate(expr_node)
-        self.tac.append(f"{id_node.value} = {expr}")
+        var_type = self.symbol_table.get(id_node.value, "unknown")
+        self.tac.append(f"{id_node.value} = {expr}  # type: {var_type}")
 
     def gen_binaryop(self, node):
         left = self.generate(node.children[0])
@@ -53,7 +59,8 @@ class TACGenerator:
 
     def gen_input(self, node):
         for id_node in node.children:
-            self.tac.append(f"input {id_node.value}")
+            var_type = self.symbol_table.get(id_node.value, "unknown")
+            self.tac.append(f"input {id_node.value}  # type: {var_type}")
 
     def gen_print(self, node):
         args = ", ".join(self.generate(arg) for arg in node.children)
@@ -125,21 +132,31 @@ else:
     print("Código Intermediário (TAC):")
     print(tac_code)
 
-    # Gerar código de máquina simples
-    print("\nCódigo de Máquina Simples:")
+    # Gerar código Assembly ASM
+    print("\nCódigo Assembly ASM:")
     for line in generator.tac:
         if "goto" in line:
-            print(line.replace("goto", "JUMP"))
+            label = line.split(" ")[1]
+            print(f"JMP {label}")
         elif "label" in line:
-            print(line.replace("label", "LABEL"))
+            label = line.split(" ")[1]
+            print(f"{label}:")
         elif "print" in line:
             parts = line.split(" ", 1)
-            print(f"OUTPUT {parts[1]}")
+            print(f"OUT {parts[1]}")
         elif "input" in line:
             parts = line.split(" ", 1)
-            print(f"INPUT {parts[1]}")
+            var_name = parts[1].split(" ")[0]
+            print(f"IN {var_name}")
         elif "=" in line:
             parts = line.split(" = ")
-            print(f"STORE {parts[1]} TO {parts[0]}")
+            dest = parts[0].strip()
+            src = parts[1].strip()
+            print(f"MOV {dest}, {src}")
+        elif "if not" in line:
+            cond = line.split(" ")[2]
+            label = line.split("goto ")[1]
+            print(f"CMP {cond}, 0")
+            print(f"JE {label}")
         else:
-            print(line)
+            print(f"; {line}")
