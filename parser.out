@@ -1,0 +1,1280 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COMMENT
+    WHITESPACE
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM ID LBRACE statements RBRACE
+Rule 2     statements -> statement statements
+Rule 3     statements -> empty
+Rule 4     statement -> assignment
+Rule 5     statement -> declaration
+Rule 6     statement -> if_statement
+Rule 7     statement -> while_statement
+Rule 8     statement -> print_statement
+Rule 9     statement -> input_statement
+Rule 10    statement -> break_statement
+Rule 11    declaration -> const_decl
+Rule 12    declaration -> var_decl
+Rule 13    const_decl -> CONST ID ASSIGN constant SEMICOLON
+Rule 14    var_decl -> type id_list SEMICOLON
+Rule 15    type -> TYPE
+Rule 16    id_list -> ID
+Rule 17    id_list -> ID COMMA id_list
+Rule 18    constant -> NUMBER
+Rule 19    constant -> STRING
+Rule 20    constant -> BOOL_VAL
+Rule 21    break_statement -> BREAK SEMICOLON
+Rule 22    assignment -> ID ASSIGN expression SEMICOLON
+Rule 23    if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE
+Rule 24    if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+Rule 25    while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE
+Rule 26    print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON
+Rule 27    input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON
+Rule 28    expression_list -> expression
+Rule 29    expression_list -> expression COMMA expression_list
+Rule 30    expression -> term
+Rule 31    expression -> expression OP_ARIT term
+Rule 32    expression -> expression OP_COMP term
+Rule 33    expression -> OP_LOG term
+Rule 34    term -> ID
+Rule 35    term -> constant
+Rule 36    term -> LPAREN expression RPAREN
+Rule 37    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ASSIGN               : 13 22
+BOOL_VAL             : 20
+BREAK                : 21
+COMMA                : 17 29
+COMMENT              : 
+CONST                : 13
+ELSE                 : 24
+ID                   : 1 13 16 17 22 34
+IF                   : 23 24
+INPUT                : 27
+LBRACE               : 1 23 24 24 25
+LPAREN               : 23 24 25 26 27 36
+NUMBER               : 18
+OP_ARIT              : 31
+OP_COMP              : 32
+OP_LOG               : 33
+PRINT                : 26
+PROGRAM              : 1
+RBRACE               : 1 23 24 24 25
+RPAREN               : 23 24 25 26 27 36
+SEMICOLON            : 13 14 21 22 26 27
+STRING               : 19
+TYPE                 : 15
+WHILE                : 25
+WHITESPACE           : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 4
+break_statement      : 10
+const_decl           : 11
+constant             : 13 35
+declaration          : 5
+empty                : 3
+expression           : 22 23 24 25 28 29 31 32 36
+expression_list      : 26 29
+id_list              : 14 17 27
+if_statement         : 6
+input_statement      : 9
+print_statement      : 8
+program              : 0
+statement            : 2
+statements           : 1 2 23 24 24 25
+term                 : 30 31 32 33
+type                 : 14
+var_decl             : 12
+while_statement      : 7
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM ID LBRACE statements RBRACE
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . ID LBRACE statements RBRACE
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM ID . LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 4
+
+
+state 4
+
+    (1) program -> PROGRAM ID LBRACE . statements RBRACE
+    (2) statements -> . statement statements
+    (3) statements -> . empty
+    (4) statement -> . assignment
+    (5) statement -> . declaration
+    (6) statement -> . if_statement
+    (7) statement -> . while_statement
+    (8) statement -> . print_statement
+    (9) statement -> . input_statement
+    (10) statement -> . break_statement
+    (37) empty -> .
+    (22) assignment -> . ID ASSIGN expression SEMICOLON
+    (11) declaration -> . const_decl
+    (12) declaration -> . var_decl
+    (23) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (24) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (25) while_statement -> . WHILE LPAREN expression RPAREN LBRACE statements RBRACE
+    (26) print_statement -> . PRINT LPAREN expression_list RPAREN SEMICOLON
+    (27) input_statement -> . INPUT LPAREN id_list RPAREN SEMICOLON
+    (21) break_statement -> . BREAK SEMICOLON
+    (13) const_decl -> . CONST ID ASSIGN constant SEMICOLON
+    (14) var_decl -> . type id_list SEMICOLON
+    (15) type -> . TYPE
+
+    RBRACE          reduce using rule 37 (empty -> .)
+    ID              shift and go to state 5
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    PRINT           shift and go to state 20
+    INPUT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONST           shift and go to state 23
+    TYPE            shift and go to state 25
+
+    statements                     shift and go to state 6
+    statement                      shift and go to state 7
+    empty                          shift and go to state 8
+    assignment                     shift and go to state 9
+    declaration                    shift and go to state 10
+    if_statement                   shift and go to state 11
+    while_statement                shift and go to state 12
+    print_statement                shift and go to state 13
+    input_statement                shift and go to state 14
+    break_statement                shift and go to state 15
+    const_decl                     shift and go to state 16
+    var_decl                       shift and go to state 17
+    type                           shift and go to state 24
+
+state 5
+
+    (22) assignment -> ID . ASSIGN expression SEMICOLON
+
+    ASSIGN          shift and go to state 26
+
+
+state 6
+
+    (1) program -> PROGRAM ID LBRACE statements . RBRACE
+
+    RBRACE          shift and go to state 27
+
+
+state 7
+
+    (2) statements -> statement . statements
+    (2) statements -> . statement statements
+    (3) statements -> . empty
+    (4) statement -> . assignment
+    (5) statement -> . declaration
+    (6) statement -> . if_statement
+    (7) statement -> . while_statement
+    (8) statement -> . print_statement
+    (9) statement -> . input_statement
+    (10) statement -> . break_statement
+    (37) empty -> .
+    (22) assignment -> . ID ASSIGN expression SEMICOLON
+    (11) declaration -> . const_decl
+    (12) declaration -> . var_decl
+    (23) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (24) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (25) while_statement -> . WHILE LPAREN expression RPAREN LBRACE statements RBRACE
+    (26) print_statement -> . PRINT LPAREN expression_list RPAREN SEMICOLON
+    (27) input_statement -> . INPUT LPAREN id_list RPAREN SEMICOLON
+    (21) break_statement -> . BREAK SEMICOLON
+    (13) const_decl -> . CONST ID ASSIGN constant SEMICOLON
+    (14) var_decl -> . type id_list SEMICOLON
+    (15) type -> . TYPE
+
+    RBRACE          reduce using rule 37 (empty -> .)
+    ID              shift and go to state 5
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    PRINT           shift and go to state 20
+    INPUT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONST           shift and go to state 23
+    TYPE            shift and go to state 25
+
+    statement                      shift and go to state 7
+    statements                     shift and go to state 28
+    empty                          shift and go to state 8
+    assignment                     shift and go to state 9
+    declaration                    shift and go to state 10
+    if_statement                   shift and go to state 11
+    while_statement                shift and go to state 12
+    print_statement                shift and go to state 13
+    input_statement                shift and go to state 14
+    break_statement                shift and go to state 15
+    const_decl                     shift and go to state 16
+    var_decl                       shift and go to state 17
+    type                           shift and go to state 24
+
+state 8
+
+    (3) statements -> empty .
+
+    RBRACE          reduce using rule 3 (statements -> empty .)
+
+
+state 9
+
+    (4) statement -> assignment .
+
+    ID              reduce using rule 4 (statement -> assignment .)
+    IF              reduce using rule 4 (statement -> assignment .)
+    WHILE           reduce using rule 4 (statement -> assignment .)
+    PRINT           reduce using rule 4 (statement -> assignment .)
+    INPUT           reduce using rule 4 (statement -> assignment .)
+    BREAK           reduce using rule 4 (statement -> assignment .)
+    CONST           reduce using rule 4 (statement -> assignment .)
+    TYPE            reduce using rule 4 (statement -> assignment .)
+    RBRACE          reduce using rule 4 (statement -> assignment .)
+
+
+state 10
+
+    (5) statement -> declaration .
+
+    ID              reduce using rule 5 (statement -> declaration .)
+    IF              reduce using rule 5 (statement -> declaration .)
+    WHILE           reduce using rule 5 (statement -> declaration .)
+    PRINT           reduce using rule 5 (statement -> declaration .)
+    INPUT           reduce using rule 5 (statement -> declaration .)
+    BREAK           reduce using rule 5 (statement -> declaration .)
+    CONST           reduce using rule 5 (statement -> declaration .)
+    TYPE            reduce using rule 5 (statement -> declaration .)
+    RBRACE          reduce using rule 5 (statement -> declaration .)
+
+
+state 11
+
+    (6) statement -> if_statement .
+
+    ID              reduce using rule 6 (statement -> if_statement .)
+    IF              reduce using rule 6 (statement -> if_statement .)
+    WHILE           reduce using rule 6 (statement -> if_statement .)
+    PRINT           reduce using rule 6 (statement -> if_statement .)
+    INPUT           reduce using rule 6 (statement -> if_statement .)
+    BREAK           reduce using rule 6 (statement -> if_statement .)
+    CONST           reduce using rule 6 (statement -> if_statement .)
+    TYPE            reduce using rule 6 (statement -> if_statement .)
+    RBRACE          reduce using rule 6 (statement -> if_statement .)
+
+
+state 12
+
+    (7) statement -> while_statement .
+
+    ID              reduce using rule 7 (statement -> while_statement .)
+    IF              reduce using rule 7 (statement -> while_statement .)
+    WHILE           reduce using rule 7 (statement -> while_statement .)
+    PRINT           reduce using rule 7 (statement -> while_statement .)
+    INPUT           reduce using rule 7 (statement -> while_statement .)
+    BREAK           reduce using rule 7 (statement -> while_statement .)
+    CONST           reduce using rule 7 (statement -> while_statement .)
+    TYPE            reduce using rule 7 (statement -> while_statement .)
+    RBRACE          reduce using rule 7 (statement -> while_statement .)
+
+
+state 13
+
+    (8) statement -> print_statement .
+
+    ID              reduce using rule 8 (statement -> print_statement .)
+    IF              reduce using rule 8 (statement -> print_statement .)
+    WHILE           reduce using rule 8 (statement -> print_statement .)
+    PRINT           reduce using rule 8 (statement -> print_statement .)
+    INPUT           reduce using rule 8 (statement -> print_statement .)
+    BREAK           reduce using rule 8 (statement -> print_statement .)
+    CONST           reduce using rule 8 (statement -> print_statement .)
+    TYPE            reduce using rule 8 (statement -> print_statement .)
+    RBRACE          reduce using rule 8 (statement -> print_statement .)
+
+
+state 14
+
+    (9) statement -> input_statement .
+
+    ID              reduce using rule 9 (statement -> input_statement .)
+    IF              reduce using rule 9 (statement -> input_statement .)
+    WHILE           reduce using rule 9 (statement -> input_statement .)
+    PRINT           reduce using rule 9 (statement -> input_statement .)
+    INPUT           reduce using rule 9 (statement -> input_statement .)
+    BREAK           reduce using rule 9 (statement -> input_statement .)
+    CONST           reduce using rule 9 (statement -> input_statement .)
+    TYPE            reduce using rule 9 (statement -> input_statement .)
+    RBRACE          reduce using rule 9 (statement -> input_statement .)
+
+
+state 15
+
+    (10) statement -> break_statement .
+
+    ID              reduce using rule 10 (statement -> break_statement .)
+    IF              reduce using rule 10 (statement -> break_statement .)
+    WHILE           reduce using rule 10 (statement -> break_statement .)
+    PRINT           reduce using rule 10 (statement -> break_statement .)
+    INPUT           reduce using rule 10 (statement -> break_statement .)
+    BREAK           reduce using rule 10 (statement -> break_statement .)
+    CONST           reduce using rule 10 (statement -> break_statement .)
+    TYPE            reduce using rule 10 (statement -> break_statement .)
+    RBRACE          reduce using rule 10 (statement -> break_statement .)
+
+
+state 16
+
+    (11) declaration -> const_decl .
+
+    ID              reduce using rule 11 (declaration -> const_decl .)
+    IF              reduce using rule 11 (declaration -> const_decl .)
+    WHILE           reduce using rule 11 (declaration -> const_decl .)
+    PRINT           reduce using rule 11 (declaration -> const_decl .)
+    INPUT           reduce using rule 11 (declaration -> const_decl .)
+    BREAK           reduce using rule 11 (declaration -> const_decl .)
+    CONST           reduce using rule 11 (declaration -> const_decl .)
+    TYPE            reduce using rule 11 (declaration -> const_decl .)
+    RBRACE          reduce using rule 11 (declaration -> const_decl .)
+
+
+state 17
+
+    (12) declaration -> var_decl .
+
+    ID              reduce using rule 12 (declaration -> var_decl .)
+    IF              reduce using rule 12 (declaration -> var_decl .)
+    WHILE           reduce using rule 12 (declaration -> var_decl .)
+    PRINT           reduce using rule 12 (declaration -> var_decl .)
+    INPUT           reduce using rule 12 (declaration -> var_decl .)
+    BREAK           reduce using rule 12 (declaration -> var_decl .)
+    CONST           reduce using rule 12 (declaration -> var_decl .)
+    TYPE            reduce using rule 12 (declaration -> var_decl .)
+    RBRACE          reduce using rule 12 (declaration -> var_decl .)
+
+
+state 18
+
+    (23) if_statement -> IF . LPAREN expression RPAREN LBRACE statements RBRACE
+    (24) if_statement -> IF . LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+
+    LPAREN          shift and go to state 29
+
+
+state 19
+
+    (25) while_statement -> WHILE . LPAREN expression RPAREN LBRACE statements RBRACE
+
+    LPAREN          shift and go to state 30
+
+
+state 20
+
+    (26) print_statement -> PRINT . LPAREN expression_list RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 31
+
+
+state 21
+
+    (27) input_statement -> INPUT . LPAREN id_list RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 32
+
+
+state 22
+
+    (21) break_statement -> BREAK . SEMICOLON
+
+    SEMICOLON       shift and go to state 33
+
+
+state 23
+
+    (13) const_decl -> CONST . ID ASSIGN constant SEMICOLON
+
+    ID              shift and go to state 34
+
+
+state 24
+
+    (14) var_decl -> type . id_list SEMICOLON
+    (16) id_list -> . ID
+    (17) id_list -> . ID COMMA id_list
+
+    ID              shift and go to state 36
+
+    id_list                        shift and go to state 35
+
+state 25
+
+    (15) type -> TYPE .
+
+    ID              reduce using rule 15 (type -> TYPE .)
+
+
+state 26
+
+    (22) assignment -> ID ASSIGN . expression SEMICOLON
+    (30) expression -> . term
+    (31) expression -> . expression OP_ARIT term
+    (32) expression -> . expression OP_COMP term
+    (33) expression -> . OP_LOG term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    OP_LOG          shift and go to state 40
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    expression                     shift and go to state 38
+    term                           shift and go to state 39
+    constant                       shift and go to state 41
+
+state 27
+
+    (1) program -> PROGRAM ID LBRACE statements RBRACE .
+
+    $end            reduce using rule 1 (program -> PROGRAM ID LBRACE statements RBRACE .)
+
+
+state 28
+
+    (2) statements -> statement statements .
+
+    RBRACE          reduce using rule 2 (statements -> statement statements .)
+
+
+state 29
+
+    (23) if_statement -> IF LPAREN . expression RPAREN LBRACE statements RBRACE
+    (24) if_statement -> IF LPAREN . expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (30) expression -> . term
+    (31) expression -> . expression OP_ARIT term
+    (32) expression -> . expression OP_COMP term
+    (33) expression -> . OP_LOG term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    OP_LOG          shift and go to state 40
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    expression                     shift and go to state 46
+    term                           shift and go to state 39
+    constant                       shift and go to state 41
+
+state 30
+
+    (25) while_statement -> WHILE LPAREN . expression RPAREN LBRACE statements RBRACE
+    (30) expression -> . term
+    (31) expression -> . expression OP_ARIT term
+    (32) expression -> . expression OP_COMP term
+    (33) expression -> . OP_LOG term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    OP_LOG          shift and go to state 40
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    expression                     shift and go to state 47
+    term                           shift and go to state 39
+    constant                       shift and go to state 41
+
+state 31
+
+    (26) print_statement -> PRINT LPAREN . expression_list RPAREN SEMICOLON
+    (28) expression_list -> . expression
+    (29) expression_list -> . expression COMMA expression_list
+    (30) expression -> . term
+    (31) expression -> . expression OP_ARIT term
+    (32) expression -> . expression OP_COMP term
+    (33) expression -> . OP_LOG term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    OP_LOG          shift and go to state 40
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    expression_list                shift and go to state 48
+    expression                     shift and go to state 49
+    term                           shift and go to state 39
+    constant                       shift and go to state 41
+
+state 32
+
+    (27) input_statement -> INPUT LPAREN . id_list RPAREN SEMICOLON
+    (16) id_list -> . ID
+    (17) id_list -> . ID COMMA id_list
+
+    ID              shift and go to state 36
+
+    id_list                        shift and go to state 50
+
+state 33
+
+    (21) break_statement -> BREAK SEMICOLON .
+
+    ID              reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    IF              reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    WHILE           reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    PRINT           reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    INPUT           reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    BREAK           reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    CONST           reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    TYPE            reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+    RBRACE          reduce using rule 21 (break_statement -> BREAK SEMICOLON .)
+
+
+state 34
+
+    (13) const_decl -> CONST ID . ASSIGN constant SEMICOLON
+
+    ASSIGN          shift and go to state 51
+
+
+state 35
+
+    (14) var_decl -> type id_list . SEMICOLON
+
+    SEMICOLON       shift and go to state 52
+
+
+state 36
+
+    (16) id_list -> ID .
+    (17) id_list -> ID . COMMA id_list
+
+    SEMICOLON       reduce using rule 16 (id_list -> ID .)
+    RPAREN          reduce using rule 16 (id_list -> ID .)
+    COMMA           shift and go to state 53
+
+
+state 37
+
+    (34) term -> ID .
+
+    SEMICOLON       reduce using rule 34 (term -> ID .)
+    OP_ARIT         reduce using rule 34 (term -> ID .)
+    OP_COMP         reduce using rule 34 (term -> ID .)
+    RPAREN          reduce using rule 34 (term -> ID .)
+    COMMA           reduce using rule 34 (term -> ID .)
+
+
+state 38
+
+    (22) assignment -> ID ASSIGN expression . SEMICOLON
+    (31) expression -> expression . OP_ARIT term
+    (32) expression -> expression . OP_COMP term
+
+    SEMICOLON       shift and go to state 54
+    OP_ARIT         shift and go to state 55
+    OP_COMP         shift and go to state 56
+
+
+state 39
+
+    (30) expression -> term .
+
+    SEMICOLON       reduce using rule 30 (expression -> term .)
+    OP_ARIT         reduce using rule 30 (expression -> term .)
+    OP_COMP         reduce using rule 30 (expression -> term .)
+    RPAREN          reduce using rule 30 (expression -> term .)
+    COMMA           reduce using rule 30 (expression -> term .)
+
+
+state 40
+
+    (33) expression -> OP_LOG . term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    term                           shift and go to state 57
+    constant                       shift and go to state 41
+
+state 41
+
+    (35) term -> constant .
+
+    SEMICOLON       reduce using rule 35 (term -> constant .)
+    OP_ARIT         reduce using rule 35 (term -> constant .)
+    OP_COMP         reduce using rule 35 (term -> constant .)
+    RPAREN          reduce using rule 35 (term -> constant .)
+    COMMA           reduce using rule 35 (term -> constant .)
+
+
+state 42
+
+    (36) term -> LPAREN . expression RPAREN
+    (30) expression -> . term
+    (31) expression -> . expression OP_ARIT term
+    (32) expression -> . expression OP_COMP term
+    (33) expression -> . OP_LOG term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    OP_LOG          shift and go to state 40
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    expression                     shift and go to state 58
+    term                           shift and go to state 39
+    constant                       shift and go to state 41
+
+state 43
+
+    (18) constant -> NUMBER .
+
+    SEMICOLON       reduce using rule 18 (constant -> NUMBER .)
+    OP_ARIT         reduce using rule 18 (constant -> NUMBER .)
+    OP_COMP         reduce using rule 18 (constant -> NUMBER .)
+    RPAREN          reduce using rule 18 (constant -> NUMBER .)
+    COMMA           reduce using rule 18 (constant -> NUMBER .)
+
+
+state 44
+
+    (19) constant -> STRING .
+
+    SEMICOLON       reduce using rule 19 (constant -> STRING .)
+    OP_ARIT         reduce using rule 19 (constant -> STRING .)
+    OP_COMP         reduce using rule 19 (constant -> STRING .)
+    RPAREN          reduce using rule 19 (constant -> STRING .)
+    COMMA           reduce using rule 19 (constant -> STRING .)
+
+
+state 45
+
+    (20) constant -> BOOL_VAL .
+
+    SEMICOLON       reduce using rule 20 (constant -> BOOL_VAL .)
+    OP_ARIT         reduce using rule 20 (constant -> BOOL_VAL .)
+    OP_COMP         reduce using rule 20 (constant -> BOOL_VAL .)
+    RPAREN          reduce using rule 20 (constant -> BOOL_VAL .)
+    COMMA           reduce using rule 20 (constant -> BOOL_VAL .)
+
+
+state 46
+
+    (23) if_statement -> IF LPAREN expression . RPAREN LBRACE statements RBRACE
+    (24) if_statement -> IF LPAREN expression . RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (31) expression -> expression . OP_ARIT term
+    (32) expression -> expression . OP_COMP term
+
+    RPAREN          shift and go to state 59
+    OP_ARIT         shift and go to state 55
+    OP_COMP         shift and go to state 56
+
+
+state 47
+
+    (25) while_statement -> WHILE LPAREN expression . RPAREN LBRACE statements RBRACE
+    (31) expression -> expression . OP_ARIT term
+    (32) expression -> expression . OP_COMP term
+
+    RPAREN          shift and go to state 60
+    OP_ARIT         shift and go to state 55
+    OP_COMP         shift and go to state 56
+
+
+state 48
+
+    (26) print_statement -> PRINT LPAREN expression_list . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 61
+
+
+state 49
+
+    (28) expression_list -> expression .
+    (29) expression_list -> expression . COMMA expression_list
+    (31) expression -> expression . OP_ARIT term
+    (32) expression -> expression . OP_COMP term
+
+    RPAREN          reduce using rule 28 (expression_list -> expression .)
+    COMMA           shift and go to state 62
+    OP_ARIT         shift and go to state 55
+    OP_COMP         shift and go to state 56
+
+
+state 50
+
+    (27) input_statement -> INPUT LPAREN id_list . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 63
+
+
+state 51
+
+    (13) const_decl -> CONST ID ASSIGN . constant SEMICOLON
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    constant                       shift and go to state 64
+
+state 52
+
+    (14) var_decl -> type id_list SEMICOLON .
+
+    ID              reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    IF              reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    WHILE           reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    PRINT           reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    INPUT           reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    BREAK           reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    CONST           reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    TYPE            reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+    RBRACE          reduce using rule 14 (var_decl -> type id_list SEMICOLON .)
+
+
+state 53
+
+    (17) id_list -> ID COMMA . id_list
+    (16) id_list -> . ID
+    (17) id_list -> . ID COMMA id_list
+
+    ID              shift and go to state 36
+
+    id_list                        shift and go to state 65
+
+state 54
+
+    (22) assignment -> ID ASSIGN expression SEMICOLON .
+
+    ID              reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    IF              reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    WHILE           reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    PRINT           reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    INPUT           reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    BREAK           reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    CONST           reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    TYPE            reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+    RBRACE          reduce using rule 22 (assignment -> ID ASSIGN expression SEMICOLON .)
+
+
+state 55
+
+    (31) expression -> expression OP_ARIT . term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    term                           shift and go to state 66
+    constant                       shift and go to state 41
+
+state 56
+
+    (32) expression -> expression OP_COMP . term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    term                           shift and go to state 67
+    constant                       shift and go to state 41
+
+state 57
+
+    (33) expression -> OP_LOG term .
+
+    SEMICOLON       reduce using rule 33 (expression -> OP_LOG term .)
+    OP_ARIT         reduce using rule 33 (expression -> OP_LOG term .)
+    OP_COMP         reduce using rule 33 (expression -> OP_LOG term .)
+    RPAREN          reduce using rule 33 (expression -> OP_LOG term .)
+    COMMA           reduce using rule 33 (expression -> OP_LOG term .)
+
+
+state 58
+
+    (36) term -> LPAREN expression . RPAREN
+    (31) expression -> expression . OP_ARIT term
+    (32) expression -> expression . OP_COMP term
+
+    RPAREN          shift and go to state 68
+    OP_ARIT         shift and go to state 55
+    OP_COMP         shift and go to state 56
+
+
+state 59
+
+    (23) if_statement -> IF LPAREN expression RPAREN . LBRACE statements RBRACE
+    (24) if_statement -> IF LPAREN expression RPAREN . LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 69
+
+
+state 60
+
+    (25) while_statement -> WHILE LPAREN expression RPAREN . LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 70
+
+
+state 61
+
+    (26) print_statement -> PRINT LPAREN expression_list RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 71
+
+
+state 62
+
+    (29) expression_list -> expression COMMA . expression_list
+    (28) expression_list -> . expression
+    (29) expression_list -> . expression COMMA expression_list
+    (30) expression -> . term
+    (31) expression -> . expression OP_ARIT term
+    (32) expression -> . expression OP_COMP term
+    (33) expression -> . OP_LOG term
+    (34) term -> . ID
+    (35) term -> . constant
+    (36) term -> . LPAREN expression RPAREN
+    (18) constant -> . NUMBER
+    (19) constant -> . STRING
+    (20) constant -> . BOOL_VAL
+
+    OP_LOG          shift and go to state 40
+    ID              shift and go to state 37
+    LPAREN          shift and go to state 42
+    NUMBER          shift and go to state 43
+    STRING          shift and go to state 44
+    BOOL_VAL        shift and go to state 45
+
+    expression                     shift and go to state 49
+    expression_list                shift and go to state 72
+    term                           shift and go to state 39
+    constant                       shift and go to state 41
+
+state 63
+
+    (27) input_statement -> INPUT LPAREN id_list RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 73
+
+
+state 64
+
+    (13) const_decl -> CONST ID ASSIGN constant . SEMICOLON
+
+    SEMICOLON       shift and go to state 74
+
+
+state 65
+
+    (17) id_list -> ID COMMA id_list .
+
+    SEMICOLON       reduce using rule 17 (id_list -> ID COMMA id_list .)
+    RPAREN          reduce using rule 17 (id_list -> ID COMMA id_list .)
+
+
+state 66
+
+    (31) expression -> expression OP_ARIT term .
+
+    SEMICOLON       reduce using rule 31 (expression -> expression OP_ARIT term .)
+    OP_ARIT         reduce using rule 31 (expression -> expression OP_ARIT term .)
+    OP_COMP         reduce using rule 31 (expression -> expression OP_ARIT term .)
+    RPAREN          reduce using rule 31 (expression -> expression OP_ARIT term .)
+    COMMA           reduce using rule 31 (expression -> expression OP_ARIT term .)
+
+
+state 67
+
+    (32) expression -> expression OP_COMP term .
+
+    SEMICOLON       reduce using rule 32 (expression -> expression OP_COMP term .)
+    OP_ARIT         reduce using rule 32 (expression -> expression OP_COMP term .)
+    OP_COMP         reduce using rule 32 (expression -> expression OP_COMP term .)
+    RPAREN          reduce using rule 32 (expression -> expression OP_COMP term .)
+    COMMA           reduce using rule 32 (expression -> expression OP_COMP term .)
+
+
+state 68
+
+    (36) term -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 36 (term -> LPAREN expression RPAREN .)
+    OP_ARIT         reduce using rule 36 (term -> LPAREN expression RPAREN .)
+    OP_COMP         reduce using rule 36 (term -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 36 (term -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 36 (term -> LPAREN expression RPAREN .)
+
+
+state 69
+
+    (23) if_statement -> IF LPAREN expression RPAREN LBRACE . statements RBRACE
+    (24) if_statement -> IF LPAREN expression RPAREN LBRACE . statements RBRACE ELSE LBRACE statements RBRACE
+    (2) statements -> . statement statements
+    (3) statements -> . empty
+    (4) statement -> . assignment
+    (5) statement -> . declaration
+    (6) statement -> . if_statement
+    (7) statement -> . while_statement
+    (8) statement -> . print_statement
+    (9) statement -> . input_statement
+    (10) statement -> . break_statement
+    (37) empty -> .
+    (22) assignment -> . ID ASSIGN expression SEMICOLON
+    (11) declaration -> . const_decl
+    (12) declaration -> . var_decl
+    (23) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (24) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (25) while_statement -> . WHILE LPAREN expression RPAREN LBRACE statements RBRACE
+    (26) print_statement -> . PRINT LPAREN expression_list RPAREN SEMICOLON
+    (27) input_statement -> . INPUT LPAREN id_list RPAREN SEMICOLON
+    (21) break_statement -> . BREAK SEMICOLON
+    (13) const_decl -> . CONST ID ASSIGN constant SEMICOLON
+    (14) var_decl -> . type id_list SEMICOLON
+    (15) type -> . TYPE
+
+    RBRACE          reduce using rule 37 (empty -> .)
+    ID              shift and go to state 5
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    PRINT           shift and go to state 20
+    INPUT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONST           shift and go to state 23
+    TYPE            shift and go to state 25
+
+    statements                     shift and go to state 75
+    statement                      shift and go to state 7
+    empty                          shift and go to state 8
+    assignment                     shift and go to state 9
+    declaration                    shift and go to state 10
+    if_statement                   shift and go to state 11
+    while_statement                shift and go to state 12
+    print_statement                shift and go to state 13
+    input_statement                shift and go to state 14
+    break_statement                shift and go to state 15
+    const_decl                     shift and go to state 16
+    var_decl                       shift and go to state 17
+    type                           shift and go to state 24
+
+state 70
+
+    (25) while_statement -> WHILE LPAREN expression RPAREN LBRACE . statements RBRACE
+    (2) statements -> . statement statements
+    (3) statements -> . empty
+    (4) statement -> . assignment
+    (5) statement -> . declaration
+    (6) statement -> . if_statement
+    (7) statement -> . while_statement
+    (8) statement -> . print_statement
+    (9) statement -> . input_statement
+    (10) statement -> . break_statement
+    (37) empty -> .
+    (22) assignment -> . ID ASSIGN expression SEMICOLON
+    (11) declaration -> . const_decl
+    (12) declaration -> . var_decl
+    (23) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (24) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (25) while_statement -> . WHILE LPAREN expression RPAREN LBRACE statements RBRACE
+    (26) print_statement -> . PRINT LPAREN expression_list RPAREN SEMICOLON
+    (27) input_statement -> . INPUT LPAREN id_list RPAREN SEMICOLON
+    (21) break_statement -> . BREAK SEMICOLON
+    (13) const_decl -> . CONST ID ASSIGN constant SEMICOLON
+    (14) var_decl -> . type id_list SEMICOLON
+    (15) type -> . TYPE
+
+    RBRACE          reduce using rule 37 (empty -> .)
+    ID              shift and go to state 5
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    PRINT           shift and go to state 20
+    INPUT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONST           shift and go to state 23
+    TYPE            shift and go to state 25
+
+    statements                     shift and go to state 76
+    statement                      shift and go to state 7
+    empty                          shift and go to state 8
+    assignment                     shift and go to state 9
+    declaration                    shift and go to state 10
+    if_statement                   shift and go to state 11
+    while_statement                shift and go to state 12
+    print_statement                shift and go to state 13
+    input_statement                shift and go to state 14
+    break_statement                shift and go to state 15
+    const_decl                     shift and go to state 16
+    var_decl                       shift and go to state 17
+    type                           shift and go to state 24
+
+state 71
+
+    (26) print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .
+
+    ID              reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    IF              reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    WHILE           reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    PRINT           reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    INPUT           reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    BREAK           reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    CONST           reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    TYPE            reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 26 (print_statement -> PRINT LPAREN expression_list RPAREN SEMICOLON .)
+
+
+state 72
+
+    (29) expression_list -> expression COMMA expression_list .
+
+    RPAREN          reduce using rule 29 (expression_list -> expression COMMA expression_list .)
+
+
+state 73
+
+    (27) input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .
+
+    ID              reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    IF              reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    WHILE           reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    PRINT           reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    INPUT           reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    BREAK           reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    CONST           reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    TYPE            reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 27 (input_statement -> INPUT LPAREN id_list RPAREN SEMICOLON .)
+
+
+state 74
+
+    (13) const_decl -> CONST ID ASSIGN constant SEMICOLON .
+
+    ID              reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    IF              reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    WHILE           reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    PRINT           reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    INPUT           reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    BREAK           reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    CONST           reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    TYPE            reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+    RBRACE          reduce using rule 13 (const_decl -> CONST ID ASSIGN constant SEMICOLON .)
+
+
+state 75
+
+    (23) if_statement -> IF LPAREN expression RPAREN LBRACE statements . RBRACE
+    (24) if_statement -> IF LPAREN expression RPAREN LBRACE statements . RBRACE ELSE LBRACE statements RBRACE
+
+    RBRACE          shift and go to state 77
+
+
+state 76
+
+    (25) while_statement -> WHILE LPAREN expression RPAREN LBRACE statements . RBRACE
+
+    RBRACE          shift and go to state 78
+
+
+state 77
+
+    (23) if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .
+    (24) if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE . ELSE LBRACE statements RBRACE
+
+    ID              reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    IF              reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    WHILE           reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    PRINT           reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    INPUT           reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    BREAK           reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    CONST           reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    TYPE            reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    RBRACE          reduce using rule 23 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE .)
+    ELSE            shift and go to state 79
+
+
+state 78
+
+    (25) while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .
+
+    ID              reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    IF              reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    WHILE           reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    PRINT           reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    INPUT           reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    BREAK           reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    CONST           reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    TYPE            reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+    RBRACE          reduce using rule 25 (while_statement -> WHILE LPAREN expression RPAREN LBRACE statements RBRACE .)
+
+
+state 79
+
+    (24) if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE . LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 80
+
+
+state 80
+
+    (24) if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE . statements RBRACE
+    (2) statements -> . statement statements
+    (3) statements -> . empty
+    (4) statement -> . assignment
+    (5) statement -> . declaration
+    (6) statement -> . if_statement
+    (7) statement -> . while_statement
+    (8) statement -> . print_statement
+    (9) statement -> . input_statement
+    (10) statement -> . break_statement
+    (37) empty -> .
+    (22) assignment -> . ID ASSIGN expression SEMICOLON
+    (11) declaration -> . const_decl
+    (12) declaration -> . var_decl
+    (23) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE
+    (24) if_statement -> . IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE
+    (25) while_statement -> . WHILE LPAREN expression RPAREN LBRACE statements RBRACE
+    (26) print_statement -> . PRINT LPAREN expression_list RPAREN SEMICOLON
+    (27) input_statement -> . INPUT LPAREN id_list RPAREN SEMICOLON
+    (21) break_statement -> . BREAK SEMICOLON
+    (13) const_decl -> . CONST ID ASSIGN constant SEMICOLON
+    (14) var_decl -> . type id_list SEMICOLON
+    (15) type -> . TYPE
+
+    RBRACE          reduce using rule 37 (empty -> .)
+    ID              shift and go to state 5
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    PRINT           shift and go to state 20
+    INPUT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONST           shift and go to state 23
+    TYPE            shift and go to state 25
+
+    statements                     shift and go to state 81
+    statement                      shift and go to state 7
+    empty                          shift and go to state 8
+    assignment                     shift and go to state 9
+    declaration                    shift and go to state 10
+    if_statement                   shift and go to state 11
+    while_statement                shift and go to state 12
+    print_statement                shift and go to state 13
+    input_statement                shift and go to state 14
+    break_statement                shift and go to state 15
+    const_decl                     shift and go to state 16
+    var_decl                       shift and go to state 17
+    type                           shift and go to state 24
+
+state 81
+
+    (24) if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements . RBRACE
+
+    RBRACE          shift and go to state 82
+
+
+state 82
+
+    (24) if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .
+
+    ID              reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    IF              reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    WHILE           reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    PRINT           reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    INPUT           reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    BREAK           reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    CONST           reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    TYPE            reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+    RBRACE          reduce using rule 24 (if_statement -> IF LPAREN expression RPAREN LBRACE statements RBRACE ELSE LBRACE statements RBRACE .)
+

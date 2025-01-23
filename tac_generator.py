@@ -1,6 +1,5 @@
 from parser import Parser
 
-
 class TACGenerator:
     def __init__(self):
         self.tac = []
@@ -63,8 +62,10 @@ class TACGenerator:
             self.tac.append(f"input {id_node.value}  # type: {var_type}")
 
     def gen_print(self, node):
-        args = ", ".join(self.generate(arg) for arg in node.children)
-        self.tac.append(f"print {args}")
+     for arg in node.children:
+        temp = self.generate(arg)
+        self.tac.append(f"param {temp}")
+        self.tac.append(f"call print {temp}")
 
     def gen_ifelse(self, node):
         condition, if_body, else_body = node.children
@@ -122,9 +123,17 @@ class TACGenerator:
         return filename
 
 def main():
+    import sys
+
+    if len(sys.argv) < 2:
+        print("Uso: python script.py <arquivo_entrada>")
+        return
+
+    input_file = sys.argv[1]
+
     try:
         # Lê o código fonte
-        with open("entrada.txt", "r") as file:
+        with open(input_file, "r") as file:
             source_code = file.read()
 
         # Faz o parsing
@@ -139,30 +148,30 @@ def main():
         # Gera o código TAC
         generator = TACGenerator()
         generator.generate(ast)
-        
+
         # Salva o TAC em um arquivo
         tac_filename = generator.save_tac()
         print(f"\nCódigo intermediário (TAC) gerado em {tac_filename}")
-        
+
         # Mostra o TAC no console
         print("\nCódigo Intermediário (TAC):")
         for line in generator.tac:
             print(line)
-        
+
         # Importa e usa o ASMGenerator
         from asm_generator import ASMGenerator
 
         # Gera o código Assembly
         asm_generator = ASMGenerator()
         asm_code = asm_generator.generate_asm(generator.tac)
-        
+
         # Salva o código Assembly
         with open('output.asm', 'w') as file:
             file.write(asm_code)
         print("\nCódigo Assembly gerado em output.asm")
 
     except FileNotFoundError:
-        print("Erro: Arquivo 'entrada.txt' não encontrado")
+        print(f"Erro: Arquivo '{input_file}' não encontrado")
     except Exception as e:
         print(f"Erro durante a execução: {str(e)}")
 
