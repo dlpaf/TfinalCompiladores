@@ -1,25 +1,10 @@
-Program Calculator {
-    const PI = 3.14;
-    int x, y;
-    float result;
-    
-    input(x, y);
-    
-    if (x > y) {
-        result = x * PI;
-        print("Result is: ", result);
-    } else {
-        result = y * PI;
-        print("Result is: ", result);
-    }
-    
-    int z; 
-    
-    while (x > 0) {
-        x = x - 1;
-        print("Countdown: ", x);
-        if (x == 5) {
-            break;
-        }
-    }
+Program SimpleTest {
+    const x =3;
+    const y =5;
+   
+   if (x > y) {
+        print("",x);
+   } else {
+       print("",y);
+   }
 }

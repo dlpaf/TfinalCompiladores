@@ -53,3 +53,10 @@ python lexer.py entrada.txt
 
 Isso irá gerar:
 - `saida.txt`: Contendo a lista de tokens identificados
+
+### 3. Gerar TAC e Código de Máquina
+python tac_generator.py entrada.txt
+
+Isso irá gerar:
+- `intermediate.tac`: Contendo o código intermediário
+- `output.asm`: Contendo o código de máquina
